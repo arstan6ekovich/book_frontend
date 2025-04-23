@@ -10,35 +10,44 @@ const Basket = () => {
   const getBasket = async () => {
     try {
       const { data } = await axios.get(
-        "https://api-crud.elcho.dev/api/v1/9ab31-01c61-cc880/book"
+        "https://api-crud.elcho.dev/api/v1/877cb-84395-750dc/basket"
       );
+      const filtered = data.data.filter((el) => el.basket);
+      const filterData = filtered.map((el) => el.basket);
+      console.log(data);
 
-      const basketItems = data.data.filter((el) => el.basket);
-      setBasket(basketItems);
+      setBasket(filterData);
     } catch (e) {
       console.error(e);
     }
   };
 
-  useEffect(() => {
-    getBasket();
-  }, []);
+  const deleteBasket = async (id) => {
+    try {
+      const { data } = await axios.delete(
+        `https://api-crud.elcho.dev/api/v1/877cb-84395-750dc/basket/${id}`
+      );
+      setBasket(data);
+      getBasket()
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   const handleIncrease = (id) => {
-    setCounts((prev) => ({
-      ...prev,
-      [id]: prev[id] + 1,
-    }));
+    setCounts((prev) => ({ ...prev, [id]: (prev[id] || 1) + 1 }));
   };
 
   const handleDecrease = (id) => {
     setCounts((prev) => ({
       ...prev,
-      [id]: prev[id] > 1 ? prev[id] - 1 : 1,
+      [id]: Math.max(1, (prev[id] || 1) - 1),
     }));
   };
 
-  let sort = basket.map((el) => el.basket);
+  useEffect(() => {
+    getBasket();
+  }, []);
 
   return (
     <div id="Basket">
@@ -47,8 +56,8 @@ const Basket = () => {
           <div className="block">
             <div className="contact">
               <div className="contact_box">
-                <h1>Контакные данные</h1>
-                <input type="text" placeholder="Фио*" />
+                <h1>Контактные данные</h1>
+                <input type="text" placeholder="ФИО*" />
                 <input type="text" placeholder="Телефон*" />
               </div>
               <div className="contact_box2">
@@ -63,6 +72,7 @@ const Basket = () => {
                 <button className="bay">Оплатить</button>
               </div>
             </div>
+
             <div className="delivery">
               <div className="delivery_box">
                 <h1>Доставка</h1>
@@ -79,22 +89,30 @@ const Basket = () => {
                 </div>
                 <textarea
                   className="text"
-                  placeholder="Область, город (район, село), улица, дом№, кв.№*"
+                  placeholder="Область, город (район, село), улица, дом №, кв. №*"
                 ></textarea>
               </div>
               <div className="delivery_box2">
                 <div className="price">
                   <h3>Общая сумма:</h3>
-                  <h2>3000$</h2>
+                  <h2>
+                    {basket.reduce(
+                      (acc, el) => acc + el.book_price * (counts[el.id] || 1),
+                      0
+                    )}
+                    $
+                  </h2>
                 </div>
                 <h3>Ещё не оплачено</h3>
               </div>
             </div>
+
             <div className="books">
-              {sort.map((el, index) => (
-                <div key={index} className="box">
+             {
+              basket.length ? <> {basket.map((el) => (
+                <div key={el.id} className="box">
                   <div className="box_img">
-                    <img src={el.book_photo} alt="" />
+                    <img src={el.book_photo} alt={el.book_name} />
                   </div>
                   <div className="text">
                     <h1>{el.book_name}</h1>
@@ -117,14 +135,15 @@ const Basket = () => {
                     </div>
 
                     <div className="delete">
-                      <h3>Удалить</h3>
+                      <h3 onClick={() => deleteBasket(el._id)}>Удалить</h3>
                       <button>
                         <RiDeleteBinFill />
                       </button>
                     </div>
                   </div>
                 </div>
-              ))}
+              ))}</> :<h1>Ваши корзина пуста</h1>
+             }
             </div>
           </div>
         </div>

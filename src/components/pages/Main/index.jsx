@@ -1,10 +1,15 @@
 import { useState } from "react";
-import image from "../../../assets/images/photo.png";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import "./Main.scss";
 
+const images = [
+  new URL("../../../assets/images/photo.png", import.meta.url).href,
+  new URL("../../../assets/images/mar.jpg", import.meta.url).href,
+  new URL("../../../assets/images/len.jpg", import.meta.url).href,
+  new URL("../../../assets/images/dev.jpg", import.meta.url).href,
+];
+
 const Main = () => {
-  const images = [image, image, image, image, image, image, image];
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const prevSlide = () => {
@@ -23,12 +28,12 @@ const Main = () => {
     <section
       id="main"
       style={{
-        background: `url(${images[currentIndex]})`,
+        backgroundImage: `url(${images[currentIndex]})`,
         minHeight: "80vh",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
         backgroundSize: "cover",
-        transition: "background 0.5s ease-in-out",
+        transition: "background-image 0.5s ease-in-out",
       }}
     >
       <div className="container">

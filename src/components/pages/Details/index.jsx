@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import "./Details.scss";
 import Cards from "../Cards";
 
 const Details = () => {
   const { id } = useParams();
+  const nav = useNavigate();
   const [details, setDetails] = useState("");
 
   const getDetails = async () => {
@@ -18,6 +19,24 @@ const Details = () => {
     } catch (e) {
       console.error(e);
     }
+  };
+  const addBasket = async (id) => {
+    await axios.post(
+      `https://api-crud.elcho.dev/api/v1/877cb-84395-750dc/basket`,
+      {
+        basket: id,
+      }
+    );
+    alert("Добавлено в корзину");
+  };
+  const startBasket = async (id) => {
+    nav("/basket");
+    await axios.post(
+      `https://api-crud.elcho.dev/api/v1/877cb-84395-750dc/basket`,
+      {
+        basket: id,
+      }
+    );
   };
   useEffect(() => {
     getDetails();
@@ -44,8 +63,12 @@ const Details = () => {
                 <p>{details.book_description}</p>
               </div>
               <div className="buttons">
-                <button>Добавить в корзину</button>
-                <button>Купить сейчас</button>
+                <button onClick={() => addBasket(details)}>
+                  Добавить в корзину
+                </button>
+                <button onClick={() => startBasket(details)}>
+                  Купить сейчас
+                </button>
               </div>
             </div>
           </div>
