@@ -1,0 +1,34 @@
+#categori {
+  padding: 70px 0;
+  width: 90%;
+  overflow-x: scroll;
+  margin: 0 auto;
+  scrollbar-width: none;
+  .categori {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    .categori-block {
+      position: relative;
+      .block-shadow {
+        width: 315px;
+        position: absolute;
+        height: 232px;
+        border-radius: 17px;
+        background: #01004980;
+      }
+      h3 {
+        position: absolute;
+        bottom: 10%;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        z-index: 2;
+        left: 5%;
+      }
+    }
+  }
+}
