@@ -32,11 +32,11 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      {newlink.map((el) => (
-        <Routes>
-          <Route path={el.path} element={el.element} id={el.id} />
-        </Routes>
-      ))}
+      <Routes>
+        {newlink.map((el) => (
+          <Route path={el.path} element={el.element} key={el.id} />
+        ))}
+      </Routes>
       <Footer />
     </div>
   );

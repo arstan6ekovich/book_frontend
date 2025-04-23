@@ -11,9 +11,17 @@ import { useState } from "react";
 const Header = () => {
   const [open, setOpen] = useState(false);
   const [passwords, setPassword] = useState("");
+  const [search, setSearch] = useState("");
   const route = useNavigate();
-
   let text = "123";
+
+  function handleSearch() {
+    if (!search.trim()) return;
+    let locSearch = JSON.parse(localStorage.getItem("search") || "[]");
+    locSearch.push(search);
+    localStorage.setItem("search", JSON.stringify(locSearch));
+    window.location.reload(); // чтобы обновить компонент Cards
+  }
 
   function password() {
     if (passwords === text) {
@@ -25,6 +33,7 @@ const Header = () => {
       alert("Пароль не верный ❌");
     }
   }
+
   return (
     <>
       <header id="header">
@@ -35,8 +44,16 @@ const Header = () => {
             </Link>
             <div className="header-left">
               <div className="search-box">
-                <input type="text" placeholder="Search here..." />
-                <h2 className="search-icon">
+                <input
+                  type="text"
+                  placeholder="Search here..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearch();
+                  }}
+                />
+                <h2 className="search-icon" onClick={handleSearch}>
                   <CiSearch />
                 </h2>
               </div>
@@ -54,6 +71,7 @@ const Header = () => {
           </div>
         </div>
       </header>
+
       <section
         id="modal"
         style={{ position: "fixed", display: open ? "flex" : "none" }}
