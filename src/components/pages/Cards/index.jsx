@@ -9,7 +9,7 @@ const Cards = () => {
   const [book, setBook] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
-
+  const [visibleCount, setVisibleCount] = useState(9); 
   useEffect(() => {
     getBook();
   }, []);
@@ -39,6 +39,8 @@ const Cards = () => {
       setFiltered(sortedBooks);
     }
   }, [sortOrder, filtered]);
+  console.log(filtered);
+  
 
   const getBook = async () => {
     try {
@@ -53,9 +55,9 @@ const Cards = () => {
 
   const addBasket = async (bookItem) => {
     let basketIds = book
-      .filter((el) => el.basket) // Фильтруем книги, у которых есть корзина
-      .map((el) => el.basket._id) // Извлекаем _id из объекта basket
-      .filter((id) => id); // Оставляем только валидные id (если они существуют)
+      .filter((el) => el.basket)
+      .map((el) => el.basket._id)
+      .filter((id) => id);
 
     let findBasket = bookItem._id;
     let findData = book
@@ -71,6 +73,10 @@ const Cards = () => {
       );
       alert("Добавлено в корзину");
     }
+  };
+
+  const loadMore = () => {
+    setVisibleCount((prevCount) => prevCount + 5); 
   };
 
   return (
@@ -89,7 +95,7 @@ const Cards = () => {
         </div>
         <div className="cards">
           {filtered.length ? (
-            filtered.map((el) =>
+            filtered.slice(0, visibleCount).map((el) =>
               !el.basket ? (
                 <div key={el._id} className="card">
                   <Link to={`/details/${el._id}`}>
@@ -111,9 +117,9 @@ const Cards = () => {
             <h1>Книг пока нет</h1>
           )}
         </div>
-        {filtered.length > 0 && (
+        {filtered.length > visibleCount && (
           <div className="card-btns">
-            <button>
+            <button onClick={loadMore}>
               Показать ещё <MdOutlineVerticalAlignBottom />
             </button>
           </div>

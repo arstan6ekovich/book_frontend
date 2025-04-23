@@ -13,7 +13,7 @@ const Header = () => {
   const [passwords, setPassword] = useState("");
   const [search, setSearch] = useState("");
   const route = useNavigate();
-  let text = "123";
+  let text = "Mar4ik_Краш";
 
   function handleSearch() {
     if (!search.trim()) return;
