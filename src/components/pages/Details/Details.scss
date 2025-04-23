@@ -5,12 +5,12 @@
     display: flex;
     gap: 20px;
     .img_box {
-      width: 426;
-      height: 624;
+      width: 426px;
+      height: 624px;
       overflow: hidden;
       img {
-        width: 426;
-        height: 624;
+        width: 426px;
+        height: 624px;
         object-fit: cover;
       }
     }
@@ -29,8 +29,8 @@
       }
 
       h2 {
-        font-weight: 700;
-        font-size: 36px;
+        font-weight: 500;
+        font-size: 30px;
         line-height: 100%;
       }
 

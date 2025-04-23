@@ -36,7 +36,7 @@ const Cards = () => {
         "https://api-crud.elcho.dev/api/v1/9ab31-01c61-cc880/book"
       );
       setBook(data.data);
-      setFiltered(data.data); // обязательно обнови filtered
+      setFiltered(data.data);
     } catch (e) {
       console.error(e);
     }
@@ -72,23 +72,30 @@ const Cards = () => {
           </select>
         </div>
         <div className="cards">
-          {filtered.slice(0, visibleCount).map((el) =>
-            !el.basket ? (
-              <div key={el._id} className="card">
-                <Link to={`/details/${el._id}`}>
-                  <img src={el.book_photo} alt={el.book_name} />
-                </Link>
-                <div className="card-text">
-                  <h2>{el.book_price} сом</h2>
-                  <button onClick={() => addBasket(el)}>
-                    <FaShoppingCart />
-                  </button>
-                </div>
-                <h3>
-                  {el.book_categori} / {el.book_name}
-                </h3>
-              </div>
-            ) : null
+          {filtered.length ? (
+            <>
+              {" "}
+              {filtered.slice(0, visibleCount).map((el) =>
+                !el.basket ? (
+                  <div key={el._id} className="card">
+                    <Link to={`/details/${el._id}`}>
+                      <img src={el.book_photo} alt={el.book_name} />
+                    </Link>
+                    <div className="card-text">
+                      <h2>{el.book_price} сом</h2>
+                      <button onClick={() => addBasket(el)}>
+                        <FaShoppingCart />
+                      </button>
+                    </div>
+                    <h3>
+                      {el.book_categori} / {el.book_name}
+                    </h3>
+                  </div>
+                ) : null
+              )}
+            </>
+          ) : (
+            <h1 className="card_error_text">Книга данные момент нету!!!</h1>
           )}
         </div>
         {filtered.length > visibleCount && (

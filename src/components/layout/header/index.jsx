@@ -15,13 +15,13 @@ const Header = () => {
   const route = useNavigate();
   let text = "Mar4ik_Краш";
 
-  function handleSearch() {
-    if (!search.trim()) return;
-    let locSearch = JSON.parse(localStorage.getItem("search") || "[]");
-    locSearch.push(search);
-    localStorage.setItem("search", JSON.stringify(locSearch));
-    window.location.reload(); // чтобы обновить компонент Cards
-  }
+  const seachInputs = () => {
+    if (search.length >= 3) {
+      route(`/search/${search}`);
+    } else {
+      alert("Erorr");
+    }
+  };
 
   function password() {
     if (passwords === text) {
@@ -47,13 +47,10 @@ const Header = () => {
                 <input
                   type="text"
                   placeholder="Search here..."
-                  value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") handleSearch();
-                  }}
+                  onKeyDown={(e) => (e.key === "Enter" ? seachInputs() : null)}
                 />
-                <h2 className="search-icon" onClick={handleSearch}>
+                <h2 className="search-icon">
                   <CiSearch />
                 </h2>
               </div>

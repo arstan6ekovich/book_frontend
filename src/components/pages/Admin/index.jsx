@@ -33,6 +33,7 @@ const Admin = () => {
           book_price: price,
           book_photo: uploadedUrl,
           book_categori: categori,
+          count: 1,
           create_book: new Date().toISOString(),
           update_book: new Date().toISOString(),
         };
@@ -43,16 +44,16 @@ const Admin = () => {
         );
 
         alert("Книга успешно добавлена!");
-        setName("");
-        setCategori("");
-        setDescription("");
-        setPhoto(null);
-        setPrice("");
       }
     } catch (e) {
       console.error(e);
       alert("Ошибка при добавлении книги");
     }
+    setName("");
+    setCategori("");
+    setDescription("");
+    setPhoto(null);
+    setPrice("");
   };
 
   return (
@@ -68,23 +69,27 @@ const Admin = () => {
             <input
               type="text"
               placeholder="Product Name"
+              value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <div className="admin-line">
               <input
                 type="text"
                 placeholder="Category"
+                value={categori}
                 onChange={(e) => setCategori(e.target.value)}
               />
               <input
                 type="text"
                 placeholder="Price"
+                value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
             </div>
             <textarea
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Product description..."
+              value={description}
             ></textarea>
             <button onClick={() => addBook()}>SAVE</button>
           </div>

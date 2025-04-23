@@ -5,6 +5,7 @@ import Basket from "./components/pages/basket";
 import Admin from "./components/pages/Admin";
 import Details from "./components/pages/Details";
 import Footer from "./components/layout/footer";
+import Search from "./components/pages/search";
 
 const App = () => {
   let newlink = [
@@ -27,6 +28,11 @@ const App = () => {
       id: 4,
       path: "/details/:id",
       element: <Details />,
+    },
+    {
+      id: 5,
+      path: "/search/:name",
+      element: <Search />,
     },
   ];
   return (
