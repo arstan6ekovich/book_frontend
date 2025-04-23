@@ -72,21 +72,23 @@ const Header = () => {
         </div>
       </header>
 
-      <section
-        id="modal"
-        style={{ position: "fixed", display: open ? "flex" : "none" }}
-      >
-        <button className="modal_btns" onClick={() => setOpen(false)}>
-          <ImCancelCircle />
-        </button>
-        <div className="container">
-          <div className="modal">
-            <input
-              type="text"
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password.."
-            />
-            <button onClick={() => password()}>SIGN IN</button>
+      <section className="modals">
+        <div
+          id="modal"
+          style={{ position: "fixed", display: open ? "flex" : "none" }}
+        >
+          <button className="modal_btns" onClick={() => setOpen(false)}>
+            <ImCancelCircle />
+          </button>
+          <div className="container">
+            <div className="modal">
+              <input
+                type="text"
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password.."
+              />
+              <button onClick={() => password()}>SIGN IN</button>
+            </div>
           </div>
         </div>
       </section>
